@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "jwtSecretKey": "TARIEL_IS_GOD",
+  "mongoUri": "mongodb+srv://TARIEL:paroli123@cluster0.2sfe9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+}
