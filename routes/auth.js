@@ -1,16 +1,16 @@
 const User = require('../models/User')
-const {Router} = require('express')
+const { Router } = require('express')
 const bcrypt = require('bcrypt')
 const config = require('config')
 const jwt = require('jsonwebtoken')
-const {check, validationResult}= require('express-validator')
+const { check, validationResult }= require('express-validator')
 const router = Router()
 // /api/auth...
 router.post(
   '/register', 
   [
     check('email', 'email is incorrect').isEmail(),
-    check('password', 'parol should be minimum 5 symbols').isLength({min: 5})
+    check('password', 'password should be minimum 5 symbols').isLength({min: 5})
   ],
   async(req, res)=>{
     try{
@@ -51,13 +51,13 @@ router.post('/login',
         })
       }
       const {email, password} = req.body
-      const user = await User.findOne(email)
+      const user = await User.findOne({email: email})
       if(!user){
         return res.status(400).json({
           message: 'user not found'
         })
       }
-      isMatched = await bcrypt.compare(password, User.password)
+      isMatched = await bcrypt.compare(password, user.password)
       if(!isMatched){
         return res.status(400).json({
           message: 'incorrect password'
@@ -65,11 +65,12 @@ router.post('/login',
       }
       const token = jwt.sign(
         {userId: user.id},
-        config.get('jwtSecret'),
+        config.get('jwtSecretKey'),
         {expiresIn: '1h'}
       )
-      return res.json({massage: 'authentication was successfully', token, userId: user.id})
+      res.json({message: 'authentication was successfully', token, userId: user.id})
     }catch(e){
+      console.log(e)
       res.status(500).json({message: 'something went wrong please try again'})
     }
   }
