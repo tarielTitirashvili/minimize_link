@@ -4,7 +4,9 @@ const mongoose = require('mongoose')
 const app = express()
 app.use(express.json({extended: true}))
 
-app.use('/api/auth', require('./routes/auth'))
+app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/links', require('./routes/link.routes'))
+
 async function start() {
   try{
     await mongoose.connect(config.get('mongoUri', {
