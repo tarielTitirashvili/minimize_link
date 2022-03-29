@@ -4,10 +4,12 @@
   "description": "mern steck beck-end",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "cross-env NODE_ENV=production node app.js",
     "listen": "nodemon app.js",
     "client": "npm run start --prefix client_side",
-    "dev": "concurrently \"npm run listen\" \"npm run client\""
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run listen\" \"npm run client\""
   },
   "author": "TARIEL TITIRASHVILI tarieltitirashvili@gmail.com",
   "license": "ISC",

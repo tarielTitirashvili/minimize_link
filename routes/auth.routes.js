@@ -70,7 +70,6 @@ router.post('/login',
       )
       res.json({message: 'authentication was successfully', token, userId: user.id})
     }catch(e){
-      console.log(e)
       res.status(500).json({message: 'something went wrong please try again'})
     }
   }
